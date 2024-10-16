@@ -381,7 +381,7 @@ export function Hero() {
                 {!selectedUser?.collectionName ?
                     <div className="flex items-center justify-center my-auto text-center">
                         <h3 className="text-2xl font-bold tracking-tight items-center">
-                            Select file to view it's content
+                            Select file to view it&#39;s content
                         </h3>
                     </div> : <>{
                         data && (
