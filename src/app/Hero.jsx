@@ -233,7 +233,7 @@ export function Hero() {
                 <Dialog open={open} onOpenChange={setOpen}>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
-                            <DialogTitle>Add data to <span className="text-blue-600" >{selectedUser.collectionName}</span></DialogTitle>
+                            <DialogTitle>Add data to <span className="text-cyan-400" >{selectedUser.collectionName}</span></DialogTitle>
                         </DialogHeader>
 
                         {data.length > 0 && (
@@ -267,7 +267,7 @@ export function Hero() {
                             <Link href="/" className="flex items-center gap-2 font-semibold">
                                 <BadgeCent className="h-6 w-6" />
                                 <span className="">
-                                    Fund<strong className="text-blue-600">Enable</strong>
+                                    Fund<strong className="text-cyan-400">Enable</strong>
                                 </span>
                             </Link>
                             <Button
@@ -282,7 +282,7 @@ export function Hero() {
                         <div className="flex-1">
                             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                                 {collection?.length === 0 ? (
-                                    <span className="m-auto text-blue-600">Data Not Available</span>
+                                    <span className="m-auto text-cyan-400">Data Not Available</span>
                                 ) : (
                                     collection?.map((user, index) => (
                                         <div
@@ -294,7 +294,7 @@ export function Hero() {
                                                 {user}
                                             </Link>
                                             <div className="flex gap-2">
-                                                <Download className="text-blue-600" onClick={() => download(user)} />
+                                                <Download className="text-cyan-400" onClick={() => download(user)} />
                                                 <Trash2 className="text-red-600" onClick={() => handleDelete(user)} />
                                             </div>
                                         </div>
@@ -322,11 +322,11 @@ export function Hero() {
                                 <Link href="/" className="flex items-center gap-2 font-semibold">
                                     <BadgeCent className="h-6 w-6" />
                                     <span className="">
-                                        Fund<strong className="text-blue-600">Enable</strong>
+                                        Fund<strong className="text-cyan-400">Enable</strong>
                                     </span>
                                 </Link>
                                 {
-                                    collection?.length === 0 ? <span className="m-auto text-blue-600">Data Not Available</span> : <>
+                                    collection?.length === 0 ? <span className="m-auto text-cyan-400">Data Not Available</span> : <>
 
                                         {collection?.map((user, index) => (
                                             <div
