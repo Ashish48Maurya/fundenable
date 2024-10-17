@@ -192,7 +192,7 @@ const Table = ({ jsonData }) => {
                                                                 onChange={(e) => {
                                                                     column.setFilter(e.target.value || undefined);
                                                                 }}
-                                                                className="p-1 border rounded-md w-full text-center text-white"
+                                                                className="p-1 border rounded-md text-black w-full text-center text-white"
                                                             />
                                                         ) : null}
                                                     </div>
