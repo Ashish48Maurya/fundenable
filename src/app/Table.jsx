@@ -158,7 +158,7 @@ const Table = ({ jsonData }) => {
                             </span>
                         </div>
 
-                        <table {...getTableProps()} className="w-full table-auto border-collapse border border-gray-300">
+                        <table {...getTableProps()} className="w-full table-auto border-collapse border border-black">
                             <thead className="bg-cyan-400 text-black">
                                 {headerGroups.map((headerGroup) => (
                                     <tr {...headerGroup.getHeaderGroupProps()} className="border-b-2 border-gray-200" key={headerGroup.id}>
