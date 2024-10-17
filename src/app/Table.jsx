@@ -87,28 +87,28 @@ const Table = ({ jsonData }) => {
                                 <button
                                     onClick={() => gotoPage(0)}
                                     disabled={!canPreviousPage}
-                                    className={`px-3 py-1 rounded-md ${canPreviousPage ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                                    className={`px-3 py-1 rounded-md ${canPreviousPage ? 'bg-cyan-400 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
                                 >
                                     <ChevronsLeft />
                                 </button>
                                 <button
                                     onClick={() => previousPage()}
                                     disabled={!canPreviousPage}
-                                    className={`px-3 py-1 rounded-md ${canPreviousPage ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                                    className={`px-3 py-1 rounded-md ${canPreviousPage ? 'bg-cyan-400 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
                                 >
                                     <ChevronLeft />
                                 </button>
                                 <button
                                     onClick={() => nextPage()}
                                     disabled={!canNextPage}
-                                    className={`px-3 py-1 rounded-md ${canNextPage ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                                    className={`px-3 py-1 rounded-md ${canNextPage ? 'bg-cyan-400 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
                                 >
                                     <ChevronRight />
                                 </button>
                                 <button
                                     onClick={() => gotoPage(pageOptions.length - 1)}
                                     disabled={!canNextPage}
-                                    className={`px-3 py-1 rounded-md ${canNextPage ? 'bg-blue-600 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                                    className={`px-3 py-1 rounded-md ${canNextPage ? 'bg-cyan-400 text-white' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
                                 >
                                     <ChevronsRight />
                                 </button>
@@ -129,7 +129,7 @@ const Table = ({ jsonData }) => {
                                         const page = e.target.value ? Number(e.target.value) - 1 : 0;
                                         gotoPage(page);
                                     }}
-                                    className="w-16 p-1 text-white font-extrabold text-md text-center border border-white bg-blue-600 rounded-md focus:outline-none"
+                                    className="w-16 p-1 text-white font-extrabold text-md text-center border border-white bg-cyan-400 rounded-md focus:outline-none"
                                 />
                             </div>
 
@@ -137,7 +137,7 @@ const Table = ({ jsonData }) => {
                                 <select
                                     value={pageSize}
                                     onChange={(e) => setPageSize(Number(e.target.value))}
-                                    className="mr-2 p-2 border border-white bg-blue-600 rounded-md focus:outline-none text-white font-semibold"
+                                    className="mr-2 p-2 border border-white bg-cyan-400 rounded-md focus:outline-none text-white font-semibold"
                                 >
                                     {[10, 20, 30, 40, 50].map((size) => (
                                         <option key={size} value={size}>
@@ -149,7 +149,7 @@ const Table = ({ jsonData }) => {
                                 <select
                                     value={fontsize}
                                     onChange={(e) => setFontsize(e.target.value)}
-                                    className="p-2 border border-white bg-blue-600 rounded-md focus:outline-none text-white font-semibold"
+                                    className="p-2 border border-white bg-cyan-400 rounded-md focus:outline-none text-white font-semibold"
                                 >
                                     <option value="text-sm">Small</option>
                                     <option value="text-md">Medium</option>
@@ -159,7 +159,7 @@ const Table = ({ jsonData }) => {
                         </div>
 
                         <table {...getTableProps()} className="w-full table-auto border-collapse border border-gray-300">
-                            <thead className="bg-blue-600 text-black">
+                            <thead className="bg-cyan-400 text-black">
                                 {headerGroups.map((headerGroup) => (
                                     <tr {...headerGroup.getHeaderGroupProps()} className="border-b-2 border-gray-200" key={headerGroup.id}>
                                         {headerGroup.headers.map((column) => (
