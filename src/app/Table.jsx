@@ -25,14 +25,25 @@ const Table = ({ jsonData }) => {
         return () => window.removeEventListener('resize', updateHeight);
     }, []);
 
+    const getUniqueValues = (data, key) => {
+        if (!data || !data.length) return [];
+        return Array.from(new Set(data.map(item => item[key])));
+    };
+    
+
     const columns = useMemo(() => {
         if (!jsonData.length) return [];
         return Object.keys(jsonData[0]).map((key) => ({
             Header: key,
             accessor: key,
-            Filter: ColumnFilter,
+            Filter: ColumnFilter, 
+            filter: 'text',
+            uniqueValues: getUniqueValues(jsonData, key),
         }));
     }, [jsonData]);
+    
+    
+    
 
     const rows = useMemo(() => {
         return jsonData.map((row) => {
@@ -40,8 +51,8 @@ const Table = ({ jsonData }) => {
             Object.keys(formattedRow).forEach((key) => {
                 let cellValue = formattedRow[key];
                 if (typeof cellValue === 'number' && cellValue > 10000 && cellValue < 60000) {
-                    const excelDate = new Date((cellValue - 25569) * 86400 * 1000); // Convert from Excel date
-                    cellValue = excelDate.toLocaleDateString(); // Format the date
+                    const excelDate = new Date((cellValue - 25569) * 86400 * 1000); 
+                    cellValue = excelDate.toLocaleDateString();
                 }
                 formattedRow[key] = cellValue;
             });
@@ -71,10 +82,11 @@ const Table = ({ jsonData }) => {
             data: rows,
             initialState: { pageIndex: 0, pageSize: 10 },
         },
-        useFilters,
+        useFilters, 
         useSortBy,
         usePagination
     );
+    
 
     return (
         <div className="w-full h-full">
@@ -185,15 +197,7 @@ const Table = ({ jsonData }) => {
                                                     </span>
                                                     <div onClick={(e) => e.stopPropagation()}>
                                                         {column.canFilter ? (
-                                                            <Input
-                                                                type="text"
-                                                                placeholder={`Filter ${column.render('Header')}`}
-                                                                value={column.filterValue || ''}
-                                                                onChange={(e) => {
-                                                                    column.setFilter(e.target.value || undefined);
-                                                                }}
-                                                                className="p-1 border rounded-md text-black w-full text-center"
-                                                            />
+                                                            <ColumnFilter column={column} />
                                                         ) : null}
                                                     </div>
                                                 </div>
@@ -218,10 +222,9 @@ const Table = ({ jsonData }) => {
                             </tbody>
                         </table>
 
-
                     </div>
                 ) : (
-                    <p className="text-center font-extrabold text-lg">No Data Available</p>
+                    <p className="text-center font-extrabold text-lg text-black">No Data Available</p>
                 )}
             </div>
         </div>
@@ -229,16 +232,22 @@ const Table = ({ jsonData }) => {
 };
 
 const ColumnFilter = ({ column }) => {
-    const { filterValue, setFilter } = column;
+    const { filterValue, setFilter, uniqueValues = [] } = column;
+
     return (
         <div className="flex justify-center items-center">
-            <Input
-                type="text"
+            <select
                 value={filterValue || ''}
                 onChange={(e) => setFilter(e.target.value || undefined)}
-                placeholder={`Search ${column.render('Header')}`}
-                className="text-white p-2 rounded-md text-center mx-auto input-placeholder"
-            />
+                className="text-black p-1 rounded-md mx-auto w-1/2"
+            >
+                <option value="">All</option>
+                {uniqueValues.map((value, idx) => (
+                    <option key={idx} value={value}>
+                        {value}
+                    </option>
+                ))}
+            </select>
         </div>
     );
 };
