@@ -20,6 +20,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import toast from "react-hot-toast";
 import Table from "./Table";
 import * as XLSX from 'xlsx';
+import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
 import {
     Dialog,
     DialogContent,
@@ -30,6 +31,7 @@ import {
 
 
 export function Hero() {
+    const { user } = useUser();
     const [isSidebarVisible, setSidebarVisible] = useState(true);
     const [loading, setLoading] = useState(false);
     const [file, setFile] = useState(null);
@@ -266,8 +268,8 @@ export function Hero() {
                         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
                             <Link href="/" className="flex items-center gap-2 font-semibold">
                                 <BadgeCent className="h-6 w-6" />
-                                <span className="">
-                                    Fund<strong className="text-cyan-400">Enable</strong>
+                                <span className="text-cyan-400">
+                                    Fund<strong className="text-[#285f96]">Enable</strong>
                                 </span>
                             </Link>
                             <Button
@@ -295,7 +297,9 @@ export function Hero() {
                                             </Link>
                                             <div className="flex gap-2">
                                                 <Download className="text-cyan-400" onClick={() => download(user)} />
-                                                <Trash2 className="text-red-600" onClick={() => handleDelete(user)} />
+                                                {
+                                                    user?.publicMetadata?.isAllowed && <Trash2 className="text-red-600" onClick={() => handleDelete(user)} />
+                                                }
                                             </div>
                                         </div>
                                     ))
@@ -321,8 +325,8 @@ export function Hero() {
                             <nav className="grid gap-2 text-lg font-medium">
                                 <Link href="/" className="flex items-center gap-2 font-semibold">
                                     <BadgeCent className="h-6 w-6" />
-                                    <span className="">
-                                        Fund<strong className="text-cyan-400">Enable</strong>
+                                    <span className="text-cyan-400">
+                                        Fund<strong className="text-[#285f96]">Enable</strong>
                                     </span>
                                 </Link>
                                 {
@@ -349,28 +353,29 @@ export function Hero() {
                         !isSidebarVisible &&
                         <PanelRightClose onClick={toggleSidebar} />
                     }
-                    <div className="w-full flex-1">
-                        <form onSubmit={handleUpload}>
-                            <div className="flex w-full max-w-sm items-center space-x-2">
-                                <Input type="file" accept=".xls,.xlsx" onChange={handleFileChange} />
-                                <Button type="submit" disabled={loading} className="font-bold">{
-                                    loading ? "Uploading..." : "Upload"
-                                }</Button>
-                            </div>
-                        </form>
-                    </div>
+                    {
+                        user?.publicMetadata?.isAllowed && <div className="w-full flex-1">
+                            <form onSubmit={handleUpload}>
+                                <div className="flex w-full max-w-sm items-center space-x-2">
+                                    <Input type="file" accept=".xls,.xlsx" onChange={handleFileChange} />
+                                    <Button type="submit" disabled={loading} className="font-bold">{
+                                        loading ? "Uploading..." : "Upload"
+                                    }</Button>
+                                </div>
+                            </form>
+                        </div>
+                    }
 
                     {
-                        data.length !== 0 &&
+                        (data.length !== 0 && user?.publicMetadata?.isAllowed) &&
                         <Button className="font-bold" onClick={toggleOpen}>Add Data</Button>
                     }
 
                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="secondary" size="icon" className="rounded-full">
-                                <CircleUser className="h-5 w-5" />
-                                <span className="sr-only">Toggle user menu</span>
-                            </Button>
+                        <DropdownMenuTrigger asChild className="absolute right-4">
+                            {
+                                user ? <UserButton /> : <SignInButton/>
+                            }
                         </DropdownMenuTrigger>
                     </DropdownMenu>
 
@@ -379,7 +384,10 @@ export function Hero() {
 
 
                 {!selectedUser?.collectionName ?
-                    <div className="flex items-center justify-center my-auto text-center">
+                    <div className="flex flex-col gap-2 items-center justify-center my-auto text-center">
+                        {
+                            user && <h1 className="text-4xl font-bold">Hello, <span className="text-cyan-400">{user?.firstName}</span>👋</h1>
+                        }
                         <h3 className="text-2xl font-bold tracking-tight items-center">
                             Select file to view it&#39;s content
                         </h3>
